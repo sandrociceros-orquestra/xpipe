@@ -55,7 +55,7 @@ public abstract class AesSecretValue extends EncryptedSecretValue {
 
     protected SecretKey getSecretKey(char[] chars) throws InvalidKeySpecException {
         var salt = new byte[SALT_BIT];
-        new Random(AES_KEY_BIT).nextBytes(salt);
+        new SecureRandom().nextBytes(salt);
         KeySpec spec = new PBEKeySpec(chars, salt, getIterationCount(), AES_KEY_BIT);
         return new SecretKeySpec(SECRET_FACTORY.generateSecret(spec).getEncoded(), "AES");
     }
